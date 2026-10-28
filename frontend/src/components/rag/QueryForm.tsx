@@ -150,7 +150,7 @@ export function QueryForm({ onSubmit, isLoading, hasAnswer }: QueryFormProps) {
                       onClick={() => setShowSourcesDropdown(false)}
                     />
                     <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 py-1 min-w-[100px] z-20">
-                      {[5, 8, 10, 15, 20, 25, 30].map((num) => (
+                      {[5, 8, 10, 15].map((num) => (
                         <button
                           key={num}
                           type="button"

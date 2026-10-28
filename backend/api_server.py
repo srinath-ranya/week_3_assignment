@@ -33,7 +33,7 @@ try:
 except ImportError:
     pass
 
-from test_backend_integration import RAGGenerator, GenerationConfig, SYSTEM_PROMPT
+from rag_generate import RAGGenerator, GenerationConfig, SYSTEM_PROMPT
 
 
 # Global instances
@@ -71,7 +71,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="SIGGRAPH 2025 RAG API",
-    description="RAG pipeline for SIGGRAPH 2025 papers",
+    description="RAG pipeline for SIGGRAPH 2025 papers ",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -251,7 +251,7 @@ IMPORTANT: You have been provided with {len(results)} paper excerpts. Make sure 
         }
         
         payload = {
-            "model": f"openai/{rag_generator.config.llm_model}",
+            "model": rag_generator.config.llm_model if "/" in rag_generator.config.llm_model else f"openai/{rag_generator.config.llm_model}",
             "messages": [
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_message}
@@ -291,7 +291,7 @@ IMPORTANT: You have been provided with {len(results)} paper excerpts. Make sure 
         processing_time = time.time() - start_time
         yield emit("complete", {
             "answer": answer,
-            "sources": list(sources_metadata.values()),
+            "sources": sources_metadata,
             "refined_query": refined if refined != query else None,
             "processing_time": processing_time
         })
@@ -445,7 +445,7 @@ IMPORTANT: You have been provided with {len(results)} paper excerpts. Make sure 
         }
         
         payload = {
-            "model": f"openai/{rag_generator.config.llm_model}",
+            "model": rag_generator.config.llm_model if "/" in rag_generator.config.llm_model else f"openai/{rag_generator.config.llm_model}",
             "messages": [
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_message}
@@ -489,7 +489,7 @@ IMPORTANT: You have been provided with {len(results)} paper excerpts. Make sure 
         await websocket.send_json({
             "type": "complete",
             "answer": answer,
-            "sources": list(sources_metadata.values()),
+            "sources": sources_metadata,
             "refined_query": refined if refined != query else None,
             "processing_time": processing_time
         })
@@ -515,21 +515,23 @@ if __name__ == "__main__":
     port = int(os.getenv("PORT", 8082))
     
     print(f"""
-╔════════════════════════════════════════════════════════════════╗
-║           SIGGRAPH 2025 RAG API Server                        ║
-╠════════════════════════════════════════════════════════════════╣
-║                                                                ║
-║  Starting server on http://0.0.0.0:{port}                     ║
-║                                                                ║
-║  Endpoints:                                                    ║
-║    • GET  /              - Frontend UI                         ║
-║    • GET  /docs          - API Documentation                   ║
-║    • POST /api/query     - Query endpoint                      ║
-║    • WS  /ws/query       - WebSocket streaming                 ║
-║                                                                ║
-║  Frontend files: ./frontend/                                   ║
-║                                                                ║
-╚════════════════════════════════════════════════════════════════╝
+╔════════════════════════════════════════════════════╗
+║            SIGGRAPH 2025 RAG API Server            ║
+║                 Dr. Srinath Ranya                  ║
+║              AI Master Class (Week 3)              ║
+╠════════════════════════════════════════════════════╣
+║                                                    ║
+║  Starting server on http://0.0.0.0:{port}            ║
+║                                                    ║
+║  Endpoints:                                        ║
+║    • GET  /              - Frontend UI             ║
+║    • GET  /docs          - API Documentation       ║
+║    • POST /api/query     - Query endpoint          ║
+║    • WS  /ws/query       - WebSocket streaming     ║
+║                                                    ║
+║  Frontend files: ./frontend/                       ║
+║                                                    ║
+╚════════════════════════════════════════════════════╝
 """)
     
     uvicorn.run(

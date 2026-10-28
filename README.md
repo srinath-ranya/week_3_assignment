@@ -184,7 +184,7 @@ Now, when you access the frontend at `http://localhost:3000`, it will make API c
 
 ## 5. Development and Testing
 
-This project includes a mock RAG implementation (`test_backend_integration.py`) that allows you to test the API integration without needing a fully functional RAG pipeline. The `api_server.py` is currently configured to use this mock.
+This project includes a mock RAG implementation (`test_backend_integration.py`) that allows you to test the API integration without needing a fully functional RAG pipeline. The `api_server.py` is currently configured to use this mock. 
 
 To implement the actual RAG logic, you will need to:
 

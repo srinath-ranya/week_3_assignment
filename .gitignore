@@ -29,6 +29,7 @@ ts-debug.log*
 # local env files
 .env*.local
 .env
+.env.*
 
 # vercel
 .vercel
@@ -55,3 +56,4 @@ backend/*.pyc
 
 
 *.npz
+*.json

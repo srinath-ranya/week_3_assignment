@@ -284,7 +284,7 @@ class RetrievalPipeline:
 
         self.config = config
     
-    def semantic_search(self, query: str, top_k: int = 50) -> list[dict]:
+    def semantic_search(self, query: str, top_k: int = 60) -> list[dict]:
         """
         Perform semantic search using Qdrant.
         
@@ -333,7 +333,7 @@ class RetrievalPipeline:
             for r in results
         ]
 
-    def bm25_search(self, query: str, top_k: int = 50) -> list[dict]:
+    def bm25_search(self, query: str, top_k: int = 60) -> list[dict]:
         """
         Perform BM25 keyword search.
         
@@ -368,7 +368,7 @@ class RetrievalPipeline:
             for idx, score in results
         ]
 
-    def hybrid_search(self, query: str, semantic_top_k: int = 50, bm25_top_k: int = 30) -> list[dict]:
+    def hybrid_search(self, query: str, semantic_top_k: int = 60, bm25_top_k: int = 60) -> list[dict]:
         """
         Combine semantic and BM25 results using weighted scoring.
         

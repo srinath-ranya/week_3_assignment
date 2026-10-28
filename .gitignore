@@ -56,3 +56,4 @@ backend/*.pyc
 
 
 *.npz
+backend/week3/
